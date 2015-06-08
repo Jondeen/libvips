@@ -598,7 +598,7 @@ vips_col_sRGB2HSV( int range, float *lut,
 	if (delta == 0) {
 		*H = 0;
 	} else if (cma == c1) {
-		*H = (((c2 - c3) / delta) % (float)6.0) * DEG2UCHAR;
+		*H = (fmod(((c2 - c3) / delta) , (float)6.0)) * DEG2UCHAR;
 	} else if (cma == c2) {
 		*H = (((c3 - c1) / delta) + 2) * DEG2UCHAR;
 	} else if (cma == c3) {
