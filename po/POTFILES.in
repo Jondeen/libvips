@@ -48,6 +48,7 @@ libvips/colour/dECMC.c
 libvips/colour/colour.c
 libvips/colour/rad2float.c
 libvips/colour/sRGB2scRGB.c
+libvips/colour/sRGB2HSV.c
 libvips/colour/UCS2LCh.c
 libvips/colour/Lab2LabQ.c
 libvips/colour/colourspace.c
