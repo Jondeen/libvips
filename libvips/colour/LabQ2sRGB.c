@@ -568,3 +568,62 @@ vips_LabQ2sRGB( VipsImage *in, VipsImage **out, ... )
 
 	return( result );
 }
+
+
+
+/* sRGB to HSV.
+ *
+ * @range is eg. 256 for 8-bit data.
+ */
+static int
+vips_col_sRGB2HSV( int range, float *lut,
+	int r, int g, int b, float *H, float *S, float *V )
+{
+	int maxval = range - 1;
+	int i;
+	float c1,c2,c3,cma,cmi,delta;
+
+	c1=r/255;
+	c2=g/255;
+	c3=b/255;
+
+	cma=VIPS_MAX(c1,VIPS_MAX(c2,c3));
+	cmi=VIPS_MIN(c1,VIPS_MIN(c2,c3));
+
+	delta=cma-cmi;
+
+	// 256/6
+	#define DEG2UCHAR 42.6666666667
+
+	if (delta == 0) {
+		*H = 0;
+	} else if (cma == c1) {
+		*H = (((c2 - c3) / delta) % 6) * DEG2UCHAR;
+	} else if (cma == c2) {
+		*H = (((c3 - c1) / delta) + 2) * DEG2UCHAR;
+	} else if (cma == c3) {
+		*H = (((c1 - c2) / delta) + 2) * DEG2UCHAR;
+	}
+
+	if (cma == 0) {
+		*S=0;
+	} else {
+		*S= delta/cma;
+	}
+
+	*V=cma;
+
+	return( 0 );
+}
+
+int
+vips_col_sRGB2HSV_8( int r, int g, int b, float *R, float *G, float *B )
+{
+	return( vips_col_sRGB2scRGB( 256, r, g, b, R, G, B ) );
+}
+
+int
+vips_col_sRGB2HSV_16( int r, int g, int b, float *H, float *S, float *V )
+{
+	return( vips_col_sRGB2HSV( 65536, r, g, b, H, S, V ) );
+}

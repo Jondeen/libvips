@@ -320,6 +320,8 @@ VImage LabQ2sRGB( VOption *options = 0 )
     throw( VError );
 VImage sRGB2scRGB( VOption *options = 0 )
     throw( VError );
+VImage sRGB2HSV( VOption *options = 0 )
+    throw( VError );
 VImage scRGB2sRGB( VOption *options = 0 )
     throw( VError );
 VImage icc_import( VOption *options = 0 )

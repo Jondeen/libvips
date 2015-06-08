@@ -2122,6 +2122,19 @@ VImage VImage::sRGB2scRGB( VOption *options )
     return( out );
 }
 
+VImage VImage::sRGB2HSV( VOption *options )
+    throw( VError )
+{
+    VImage out;
+
+    call( "sRGB2HSV" ,
+        (options ? options : VImage::option()) ->
+            set( "in", *this ) ->
+            set( "out", &out ) );
+
+    return( out );
+}
+
 VImage VImage::scRGB2sRGB( VOption *options )
     throw( VError )
 {

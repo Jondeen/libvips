@@ -207,6 +207,7 @@ typedef struct _VipsColourRoute {
 #define LABS VIPS_INTERPRETATION_LABS
 #define scRGB VIPS_INTERPRETATION_scRGB
 #define sRGB VIPS_INTERPRETATION_sRGB
+#define HSV VIPS_INTERPRETATION_HSV
 #define RGB16 VIPS_INTERPRETATION_RGB16
 #define GREY16 VIPS_INTERPRETATION_GREY16
 #define YXY VIPS_INTERPRETATION_YXY
@@ -334,6 +335,7 @@ static VipsColourRoute vips_colour_routes[] = {
 	{ sRGB, RGB16, { vips_sRGB2RGB16, NULL } },
 	{ sRGB, GREY16, { vips_sRGB2scRGB, vips_scRGB2BW16, NULL } },
 	{ sRGB, YXY, { vips_sRGB2scRGB, vips_scRGB2XYZ, vips_XYZ2Yxy, NULL } },
+	{ sRGB, HSV, { vips_sRGB2HSV, NULL } },
 
 	{ RGB16, XYZ, { vips_sRGB2scRGB, vips_scRGB2XYZ, NULL } },
 	{ RGB16, LAB, { vips_sRGB2scRGB, vips_scRGB2XYZ, vips_XYZ2Lab, NULL } },

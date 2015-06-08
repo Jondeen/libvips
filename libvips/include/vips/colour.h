@@ -147,6 +147,8 @@ int vips_scRGB2BW( VipsImage *in, VipsImage **out, ... )
 	__attribute__((sentinel));
 int vips_sRGB2scRGB( VipsImage *in, VipsImage **out, ... )
 	__attribute__((sentinel));
+int vips_sRGB2HSV( VipsImage *in, VipsImage **out, ... )
+	__attribute__((sentinel));
 int vips_scRGB2XYZ( VipsImage *in, VipsImage **out, ... )
 	__attribute__((sentinel));
 
@@ -200,6 +202,9 @@ float vips_col_Chcmc2h( float C, float hcmc );
 
 int vips_col_sRGB2scRGB_8( int r, int g, int b, float *R, float *G, float *B );
 int vips_col_sRGB2scRGB_16( int r, int g, int b, float *R, float *G, float *B );
+
+int vips_col_sRGB2HSV_8( int r, int g, int b, float *R, float *G, float *B );
+int vips_col_sRGB2HSV_16( int r, int g, int b, float *R, float *G, float *B );
 
 int vips_col_scRGB2XYZ( float R, float G, float B, 
 	float *X, float *Y, float *Z );
