@@ -619,7 +619,7 @@ vips_col_sRGB2HSV( int range, float *lut,
 int
 vips_col_sRGB2HSV_8( int r, int g, int b, float *R, float *G, float *B )
 {
-	return( vips_col_sRGB2scRGB( 256, r, g, b, R, G, B ) );
+	return( vips_col_sRGB2HSV( 256, r, g, b, R, G, B ) );
 }
 
 int
