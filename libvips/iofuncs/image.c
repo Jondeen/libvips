@@ -684,7 +684,7 @@ vips_image_sanity( VipsObject *object, VipsBuf *buf )
 				image->Coding != VIPS_CODING_NONE && 
 				image->Coding != VIPS_CODING_LABQ &&
 				image->Coding != VIPS_CODING_RAD) ||
-			image->Type > VIPS_INTERPRETATION_scRGB ||
+			image->Type >= VIPS_INTERPRETATION_LAST ||
 			image->dtype > VIPS_IMAGE_PARTIAL || 
 			image->dhint > VIPS_DEMAND_STYLE_ANY ) 
 			vips_buf_appends( buf, "bad enum\n" );
