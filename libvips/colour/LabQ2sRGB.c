@@ -576,8 +576,7 @@ vips_LabQ2sRGB( VipsImage *in, VipsImage **out, ... )
  * @range is eg. 256 for 8-bit data.
  */
 static int
-vips_col_sRGB2HSV( int range, float *lut,
-	int r, int g, int b, float *H, float *S, float *V )
+vips_col_sRGB2HSV( int range, int r, int g, int b, float *H, float *S, float *V )
 {
 	int maxval = range - 1;
 	int i;
