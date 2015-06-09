@@ -580,7 +580,7 @@ vips_col_sRGB2HSV( int range, int r, int g, int b, float *H, float *S, float *V 
 {
 	int maxval = range - 1;
 	int i;
-	float c1,c2,c3,cma,cmi,delta
+	float c1,c2,c3,cma,cmi,delta;
 
 	c1=(float)r/(float)255.0;
 	c2=(float)g/(float)255.0;
