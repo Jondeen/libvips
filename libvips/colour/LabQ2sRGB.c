@@ -594,7 +594,7 @@ vips_col_sRGB2HSV( int range, int r, int g, int b, float *H, float *S, float *V 
 	// 256/6
 	#define DEG2UCHAR 42.6666666667
 
-	if (delta == 0) {
+	if (delta == 0.0) {
 		*H = 0;
 	} else if (cma == c1) {
 		*H = (fmod(((c2 - c3) / delta) , (float)6.0)) * DEG2UCHAR;
@@ -604,13 +604,13 @@ vips_col_sRGB2HSV( int range, int r, int g, int b, float *H, float *S, float *V 
 		*H = (((c1 - c2) / delta) + 2) * DEG2UCHAR;
 	}
 
-	if (cma == 0) {
-		*S=0;
+	if (cma == 0.0) {
+		*S=0.0;
 	} else {
-		*S= delta/cma;
+		*S= 256*delta/cma;
 	}
 
-	*V=cma;
+	*V=256*cma;
 
 	return( 0 );
 }
