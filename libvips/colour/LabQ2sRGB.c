@@ -580,37 +580,37 @@ vips_col_sRGB2HSV( int range, int r, int g, int b, float *H, float *S, float *V 
 {
 	int maxval = range - 1;
 	int i;
-	float c1,c2,c3,cma,cmi,delta;
+	float c1,c2,c3,cma,cmi,delta
 
-	c1=r/255;
-	c2=g/255;
-	c3=b/255;
+	c1=(float)r/(float)255.0;
+	c2=(float)g/(float)255.0;
+	c3=(float)b/(float)255.0;
 
 	cma=VIPS_MAX(c1,VIPS_MAX(c2,c3));
 	cmi=VIPS_MIN(c1,VIPS_MIN(c2,c3));
 
 	delta=cma-cmi;
 
-	// 256/6
-	#define DEG2UCHAR 42.6666666667
+	float normalization = range/(float)6.0;
+
 
 	if (delta == 0.0) {
 		*H = 0;
 	} else if (cma == c1) {
-		*H = (fmod(((c2 - c3) / delta) , (float)6.0)) * DEG2UCHAR;
+		*H = (fmod(((c2 - c3) / delta) , (float)6.0)) * normalization;
 	} else if (cma == c2) {
-		*H = (((c3 - c1) / delta) + 2) * DEG2UCHAR;
+		*H = (((c3 - c1) / delta) + 2) * normalization;
 	} else if (cma == c3) {
-		*H = (((c1 - c2) / delta) + 2) * DEG2UCHAR;
+		*H = (((c1 - c2) / delta) + 2) * normalization;
 	}
 
 	if (cma == 0.0) {
 		*S=0.0;
 	} else {
-		*S= 256*delta/cma;
+		*S= range*delta/cma;
 	}
 
-	*V=256*cma;
+	*V=range*cma;
 
 	return( 0 );
 }
