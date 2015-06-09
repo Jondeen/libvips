@@ -601,7 +601,7 @@ vips_col_sRGB2HSV( int range, int r, int g, int b, float *H, float *S, float *V 
 	} else if (cma == c2) {
 		*H = (((c3 - c1) / delta) + 2) * normalization;
 	} else if (cma == c3) {
-		*H = (((c1 - c2) / delta) + 2) * normalization;
+		*H = (((c1 - c2) / delta) + 4) * normalization;
 	}
 
 	if (cma == 0.0) {
