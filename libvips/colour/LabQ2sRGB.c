@@ -578,41 +578,53 @@ vips_LabQ2sRGB( VipsImage *in, VipsImage **out, ... )
 static int
 vips_col_sRGB2HSV( int range, int r, int g, int b, float *H, float *S, float *V )
 {
-	int maxval = range - 1;
-	int i;
-	float c1,c2,c3,cma,cmi,delta;
+	unsigned char c_max,c_min,delta;
 
-	c1=(float)r/(float)255.0;
-	c2=(float)g/(float)255.0;
-	c3=(float)b/(float)255.0;
+	float wrap_around_hue, secondary_diff;
 
-	cma=VIPS_MAX(c1,VIPS_MAX(c2,c3));
-	cmi=VIPS_MIN(c1,VIPS_MIN(c2,c3));
+		if (g < b) {
+			if (b < r) {
+				c_max = r;
+				c_min = g;
+				secondary_diff = g - b;
+				wrap_around_hue = 255.0f;
+			} else {
+				c_max = b;
+				c_min = VIPS_MIN(g, r);
+				secondary_diff = r - g;
+				wrap_around_hue = 170.0f;
+			}
+		} else {
+			if (g < r) {
+				c_max = r;
+				c_min = b;
+				secondary_diff = g - b;
+				wrap_around_hue = 0.0f;
+			} else {
+				c_max = g;
+				c_min = VIPS_MIN(b, r);
+				secondary_diff = b - r;
+				wrap_around_hue = 85.0f;
+			}
+		}
 
-	delta=cma-cmi;
 
-	float normalization = range/(float)6.0;
+		if (c_max == 0) {
+			*H = 0;
+			*S = 0;
+			*V = 0;
+		} else {
+			*V = c_max;
+			delta = c_max - c_min;
 
+			if (delta == 0) {
+				*H = 0;
+			} else {
+				*H = (unsigned char) (42.5f*(secondary_diff / (float) delta) + wrap_around_hue);
+			}
 
-	if (delta == 0.0) {
-		*H = 0;
-	} else if (cma == c1) {
-		*H = ((c2 - c3) / delta)  * normalization;
-		if (c2 < c3) *H = *H + (float) 256.0;
-	} else if (cma == c2) {
-		*H = (((c3 - c1) / delta) + 2) * normalization;
-	} else if (cma == c3) {
-		*H = (((c1 - c2) / delta) + 4) * normalization;
-	}
-
-	if (cma == 0.0) {
-		*S=0.0;
-	} else {
-		*S= range*delta/cma;
-	}
-
-	*V=range*cma;
-
+			*S = (( delta*255.0f / (float) c_max));
+		}
 	return( 0 );
 }
 
